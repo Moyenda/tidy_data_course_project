@@ -4,14 +4,14 @@ CODE BOOK - GETTING AND CLEANING DATA COURSE PROJECT
 
 CONTENTS:
 
-1 - Introductory Remarks
-2 - Variables Used
-3 - Description of Data
-4 - Process for Producing Tidy Data Set
-5 - Appendix
+1. Introductory Remarks
+2. Variables Used
+3. Description of Data
+4. Process for Producing Tidy Data Set
+5. Appendix
 
 
-1. INTRODUCTORY REMARKS
+1 - INTRODUCTORY REMARKS
 
 This course project required the manipulation of the Human Activity Recognition Using 
 Smartphones Data Set described at the following web address:
@@ -32,7 +32,7 @@ Note that I am not required to demonstrate any particular understanding of the d
 tidied. 
 
 
-2. VARIABLES USED
+2 - VARIABLES USED
 
 There are a large number of variables contained in the original data set. There are two
 considerations relevant to determining how the data in the original data set is deployed 
@@ -80,7 +80,7 @@ mean_value: a numeric variable containing the mean value of the measurement for 
 	original data set). 
 	
 
-3. DESCRIPTION OF DATA
+3 - DESCRIPTION OF DATA
 
 The original data set was obtained from downloading and unzipping the file at the
 following link:
@@ -110,52 +110,52 @@ relevant to my analysis and so I did not use these.
 There were no missing values in the data sources that I used. 
 
 
-4. PROCESS OF PRODUCING TIDY DATA SET
+4 - PROCESS OF PRODUCING TIDY DATA SET
 
 I produced a single R script, run_analysis.R, that produces the required tidy data set 
 from the original data set. My methodology for doing this is as follows. 
 
-1 - Source two packages, dplyr and reshape2, that will be of use in my script.
+1. Source two packages, dplyr and reshape2, that will be of use in my script.
 
-2 - Read the 7 data files (specified in the Data section above) into R and assign to 
+2. Read the 7 data files (specified in the Data section above) into R and assign to 
 	data frame variables. Reassign the second column of the features.txt data as a 
 	character vector in order to obtain descriptive names of all measurement types.
 	Prepend the words 'subjects' and 'activities' to this vector as I will later use it 
 	to provide column names for the measurement value data.
 	
-3 - Column bind the train and test subject and activity data to the measurement value data
+3. Column bind the train and test subject and activity data to the measurement value data
 	to their respective measurement value data frames and use the features character 
 	vector to provide column names to the resulting dataframes. 
 	
-4 - Row bind the train and test data frames into one all.data data frame, so fulfilling
+4. Row bind the train and test data frames into one all.data data frame, so fulfilling
 	the first point in the specification. 
 	
-5 - Referring to activity_labels.txt, reformulate the activities column as a factor 
+5. Referring to activity_labels.txt, reformulate the activities column as a factor 
 	variable with the original numerical values corresponding to the appropriate activity
 	value, so fulfilling the third point in the specification. 
 	
-6 - I am unable to use the select function (from dplyr) while some column names are 
+6. I am unable to use the select function (from dplyr) while some column names are 
 	duplicate values. Fortunately, looking at these values, I find that none of them are 
 	relevant to my analysis and so I am able to subset the all.data data set to remove 
 	these columns. 
 	
-7 - I then use the select function to obtain only the columns with names containing the 
+7. I then use the select function to obtain only the columns with names containing the 
 	terms 'mean()' and 'std()' for reasons set out in the Variables section above. As this
 	process removes the subject and activity columns, I reattach these with cbind().
 	
-8 - The principles of tidy data require that all variables should be in a column, and my
+8. The principles of tidy data require that all variables should be in a column, and my
 	selection data set still has the measurement type variable in the dataframe head. I 
 	melt() the dataframe to resolve this, preserving the subject and activity variable 
 	columns.
 	
-9 - I am then able to collapse the measurement variables into the mean of the values for 
+9. I am then able to collapse the measurement variables into the mean of the values for 
 	each activity and each subject by using the dplyr group_by() and summarise() functions
 	with mean() selected as the aggregating function for summarise. The data set is now 
 	tidy. All that remains is to assign some more descriptive column names and write the 
 	data set to disk in the manner specified in the project instructions.  
 	
 	
-5. APPENDIX
+5 - APPENDIX
 
 The following is the abridged content of the features_info.txt file from the original data 
 set. I include all sections useful to the task of deciphering the meanings of the various 
@@ -177,27 +177,27 @@ fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals).
 These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
+tBodyAcc-XYZ  
+tGravityAcc-XYZ  
+tBodyAccJerk-XYZ  
+tBodyGyro-XYZ  
+tBodyGyroJerk-XYZ  
+tBodyAccMag  
+tGravityAccMag  
+tBodyAccJerkMag  
+tBodyGyroMag  
+tBodyGyroJerkMag  
+fBodyAcc-XYZ  
+fBodyAccJerk-XYZ  
+fBodyGyro-XYZ  
+fBodyAccMag  
+fBodyAccJerkMag  
+fBodyGyroMag  
+fBodyGyroJerkMag  
 
 The set of variables that were estimated from these signals are: 
 
-mean(): Mean value
+mean(): Mean value  
 std(): Standard deviation
 
 --------
